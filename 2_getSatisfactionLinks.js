@@ -6,8 +6,8 @@ var fs = require('fs');
 // 第一部分
 /********************************************************************/
 // 1、原始数据
-// var originDataPath = './origindata/social.json'
-var originDataPath = './origindata/lianmai.json'
+var originDataPath = './origindata/search.json'
+// var originDataPath = './origindata/lianmai.json'
 // var originDataPath = './origindata/live.json'
 // var originDataPath = './origindata/game.json'
 // var originDataPath = './origindata/yiliao.json'
@@ -33,7 +33,7 @@ for (var i = 0; i < useArr.length; i++) {
 // 当前搜索列表序号
 var searchCount = readFromTxt() ? parseInt(readFromTxt()) : 0;
 if (searchCount >= useArr.length) {
-    console.log('所有公司详细信息已经全部写入' + filePath + '文件！')
+    console.log('所有详细信息已经全部写入' + filePath + '文件！')
     phantom.exit();
 }
 function readFromTxt() {
@@ -117,7 +117,7 @@ function startSearch(initialurlParam) {
                 startSearch(initialurlParam);
                 failTryCount++
             } else {
-                console.log('获取失败，第'+ failTryCount +'次重试失败，放弃该公司，查询下一个公司···');
+                console.log('获取失败，第'+ failTryCount +'次重试失败，放弃，查询下一个···');
                 // 失败超过限制次数，放弃，执行获取下一个链接
                 reSearch();
             }
@@ -132,7 +132,7 @@ function startSearch(initialurlParam) {
                     /********************************************************************/
                     // evaluate执行JS
                     var content = page.evaluate(function() {
-                        var keyWords = ['音频','视频']
+                        var keyWords = ['语音','音频','视频', '教育','网校','互动','社交','连麦','直播','游戏','医疗','健康','呼叫']
                         var searchRes = $('.app-describe .description').html();
                         var isRelevant = false;
                         var relevantTagArr = []
@@ -150,7 +150,7 @@ function startSearch(initialurlParam) {
 
                     if (content === '0') {
                         reTryCount = 1;
-                        console.log('搜索结果不匹配关键字，放弃该公司，查询下一个公司···');
+                        console.log('搜索结果不匹配关键字，放弃，查询下一个···');
                         console.log('********************************************************************\n');
                         writeHistoryDetails(searchCount + 1)
                         reSearch();
@@ -165,7 +165,7 @@ function startSearch(initialurlParam) {
                             startSearch(initialurlParam);
                             reTryCount++;
                         } else {
-                            console.log('没有搜索到结果，可能是获取速度过快，js还未执行，第'+ reTryCount +'次重试失败，放弃该公司，查询下一个公司···');
+                            console.log('没有搜索到结果，可能是获取速度过快，js还未执行，第'+ reTryCount +'次重试失败，放弃，查询下一个···');
                             console.log('********************************************************************\n');
                             // 失败超过限制次数，放弃，执行获取下一个链接
                             reSearch();
@@ -191,7 +191,7 @@ startSearch(initialurl);
 // 写入数据
 function writeToTxt(html) {
     // console.log('写入 = ', JSON.stringify(html))
-    console.log('写入第'+ (searchCount + 1) +'条数据， 公司名称：' + html.companyName)
+    console.log('写入数据， 名称：' + html.companyName)
     console.log('********************************************************************\n');
     var str = '';
 
@@ -213,7 +213,7 @@ function reSearch() {
     failTryCount = 1;
     reTryCount = 1;
     if (searchCount >= (useArr.length - 1)) {
-        console.log('所有公司详细信息已经全部写入' + filePath + '文件！')
+        console.log('所有详细信息已经全部写入' + filePath + '文件！')
         phantom.exit();
     }
     var link = changeSearchWord(searchCount);

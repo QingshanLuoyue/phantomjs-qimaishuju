@@ -109,7 +109,7 @@ function startSearch(initialurlParam) {
                 startSearch(initialurlParam);
                 failTryCount++
             } else {
-                console.log('获取失败，第'+ failTryCount +'次重试失败，放弃该公司，查询下一个公司···');
+                console.log('获取失败，第'+ failTryCount +'次重试失败，放弃，查询下一个···');
                 // 失败超过限制次数，放弃，执行获取下一个链接
                 reSearch();
             }
@@ -121,14 +121,26 @@ function startSearch(initialurlParam) {
                     // 第四部分
                     /********************************************************************/
                     // evaluate执行JS
-                    var content = page.evaluate(function() {
-   
-                        // 获取搜索出来的公司详细信息
-                        var searchRes = $('.det-ins-btn-box .det-down-btn').attr('data-apkurl');
-                        
-                        return searchRes;
-                        
-                    })
+                    var content = null;
+                    if (useArr[searchCount].market === '应用宝') {
+                        content = page.evaluate(function() {
+                            // 获取搜索出来的公司详细信息
+                            var searchRes = $('.det-ins-btn-box .det-down-btn').attr('data-apkurl');
+                            return searchRes;
+                        })
+                    } else if (useArr[searchCount].market === '百度') {
+                        content = page.evaluate(function() {
+                            // 获取搜索出来的公司详细信息
+                            var searchRes = $('#doc .yui3-g .app-intro .area-download a').attr('href');
+                            return searchRes; 
+                        })
+                    } else if (useArr[searchCount].market === '360') {
+                        content = page.evaluate(function() {
+                            // 获取搜索出来的公司详细信息
+                            var searchRes = $('#app-info-panel .js-downLog.dbtn').attr('href').match(/(^|&)url=([^&]*)(&|$)/)[2]
+                            return searchRes; 
+                        })
+                    }
                     
                     console.log('content = ', JSON.stringify(content));
 
@@ -146,7 +158,7 @@ function startSearch(initialurlParam) {
                             startSearch(initialurlParam);
                             reTryCount++;
                         } else {
-                            console.log('没有搜索到结果，可能是获取速度过快，js还未执行，第'+ reTryCount +'次重试失败，放弃该公司，查询下一个公司···');
+                            console.log('没有搜索到结果，可能是获取速度过快，js还未执行，第'+ reTryCount +'次重试失败，放弃，查询下一个···');
                             // 失败超过限制次数，放弃，执行获取下一个链接
                             reSearch();
                         }
@@ -172,7 +184,7 @@ startSearch(initialurl);
 // 写入数据
 function writeToTxt(html) {
     // console.log('写入 = ', JSON.stringify(html))
-    console.log('写入第'+ (searchCount + 1) +'条数据， 应用名称：' + html.appName)
+    console.log('写入数据， 应用名称：' + html.appName)
     console.log('********************************************************************\n');
     var str = '';
     if (searchCount >= useArr.length) {
@@ -193,7 +205,7 @@ function reSearch() {
     failTryCount = 1;
     reTryCount = 1;
     if (searchCount >= useArr.length) {
-        console.log('所有公司详细信息已经全部写入' + filePath + '文件！')
+        console.log('所有详细信息已经全部写入' + filePath + '文件！')
         phantom.exit();
     }
     var link = changeSearchWord(searchCount);

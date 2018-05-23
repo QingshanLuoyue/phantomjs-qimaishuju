@@ -1,6 +1,5 @@
-# phantomjs-qimaishuju
-这是一个七麦数据的爬虫
-
+# qimaishuju
+七麦数据数据抓取
 >利用 phantomjs抓取动态js渲染的网页
 
 ##origindata目录存储 原始json数据

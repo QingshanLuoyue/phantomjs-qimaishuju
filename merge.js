@@ -37,4 +37,4 @@ for (var i = 0; i < finalDataParse.length; i++) {
 	}
 }
 // console.log('msgArr = ', finalDataParse)
-module.exports.finalData = finalDataParse
+exports.result = finalDataParse
