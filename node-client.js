@@ -317,7 +317,7 @@ function writeToTxt(filePath, html) {
 function sendToPhantomjsExit() {
     options = { 
         hostname: '127.0.0.1', 
-        port: 8080, 
+        port: port, 
         path: '/?exit=yes', 
         method: 'GET' 
     }; 
