@@ -1,12 +1,13 @@
 var fs = require('fs');
 
 function writeToTxt() {
-	fs.writeFileSync('./tempdata/2-satisfactionLinks.txt', '');
 	fs.writeFileSync('./tempdata/3-downloadPage.txt', '');
 	fs.writeFileSync('./tempdata/4-downloadNum.txt', '');
 	fs.writeFileSync('./tempdata/5-finalData.txt', '');
+	
+	
+	fs.writeFileSync('./storage/1-searchType.txt', '0');
 
-	fs.writeFileSync('./storage/2-satisfactionHistory.txt', '0');
 	fs.writeFileSync('./storage/3-downloadPageHistory.txt', '0');
 	fs.writeFileSync('./storage/4-downloadNumHistory.txt', '0');
 	fs.writeFileSync('./storage/5-finalDataHistory.txt', '0');

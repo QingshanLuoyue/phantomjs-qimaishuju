@@ -4,6 +4,11 @@
     "fs": "^0.0.1-security",
     "http": "^0.0.0",
     "json-format": "^1.0.1",
+    "phantomjs": "^2.1.7+deprecated",
     "phantomjs-prebuilt": "^2.1.16"
+  },
+  "scripts": {
+    "start": "phantomjs 2_getDownloadPage.js 8282",
+    "dev": "node node-client.js"
   }
 }
