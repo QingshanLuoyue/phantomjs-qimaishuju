@@ -4,7 +4,7 @@ var system = require('system');  //get args
 var args = system.args;
 console.log(args)
 if (args.length === 2) {
-    var port=Number(args[1]);
+    var port = Number(args[1]);
 } else {
     var port = 8080;
 }
@@ -395,7 +395,7 @@ while (new Date() - initTime < duration) {
     ++i;
 }
 
-execFile("node", ["node-client.js"], null, function (err, stdout, stderr) {
+execFile("node", ["node-client.js", port], null, function (err, stdout, stderr) {
     // console.log("execFileSTDOUT:", JSON.stringify(stdout))
     // console.log("execFileSTDERR:", JSON.stringify(stderr))
     console.log('搜索完毕，关闭phantonjs进程')

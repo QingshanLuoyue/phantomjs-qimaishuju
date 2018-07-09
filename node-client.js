@@ -1,7 +1,15 @@
 var http = require('http'); 
 var fs = require('fs'); 
 
-var port = 8080
+console.log('args', process.argv)
+var port
+if (process.argv.length === 3) {
+    port = Number(process.argv[2]);
+} else {
+    port = 8080;
+}
+console.log('node port: ', port)
+// var port = 8080
 var options = {}
 var data = {}
 var req
