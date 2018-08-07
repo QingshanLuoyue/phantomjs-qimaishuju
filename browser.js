@@ -1,4 +1,4 @@
-var nodeList = document.querySelector('#searchList .ivu-table-wrapper').querySelectorAll('.ivu-table-row')
+var nodeList = document.querySelector('#searchList-android .ivu-table-wrapper').querySelectorAll('.ivu-table-row')
 var searchObj = []
 var host = location.host
 var proto = location.protocol
